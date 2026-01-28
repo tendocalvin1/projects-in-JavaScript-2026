@@ -92,3 +92,17 @@ console.log(p); // null → you decided
 // - Validating input
 // - Avoiding type errors
 
+
+function step(msg, time){
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log(msg);
+            resolve();
+        }, time);
+    });
+}
+
+step("Wake up", 1000)
+    .then(() => step("Brush", 1000))
+    .then(() => step("Eat", 1000));
+
