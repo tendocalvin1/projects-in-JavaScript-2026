@@ -35,3 +35,21 @@ async function fetchMultipleData() {
     const results = await Promise.all(promises);
     console.log("All data fetched:", results);
 }
+
+async function greet(){
+    return "Hello, My name is Tendo Calvin and I am a software developer.";
+}
+
+// Example  – Await delay
+function delay(){
+    return new Promise((resolve)=>{
+        setTimeout((resolve, 2000))
+    })
+}
+
+async function run(){
+    await delay();
+    console.log("2 seconds passed");
+}
+
+run()
