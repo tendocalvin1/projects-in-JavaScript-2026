@@ -137,3 +137,133 @@ login("1234")
     .then(res => console.log(res))
     .catch(err => console.log(err))
 
+
+// More numbers on Promises
+// Exercise 1
+function getUser(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            console.log("User fetched");
+            resolve({id: 1, name: "Tendo Calvin"});
+        },1000)
+    })
+}
+
+function getPosts(userId){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            console.log("Posts fetched")
+            resolve(["Post 1", "Post 2"])
+        },1000)
+    })
+}
+
+
+function getComments(post){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            console.log("Comments fetched")
+            resolve(["Nice", "Great"]);
+        },1000)
+    })
+}
+getUser()
+    .then(user => getPosts(user.id))
+    .then(posts => getComments(posts[0]))
+    .then(()=> console.log("Done"))
+
+// 🧪 Exercise 2 — Parallel speed test (must use Promise.all)
+
+let letter1 = new Promise(res => setTimeout(()=>resolve("C"), 3000))
+let letter2 = new Promise(res => setTimeout(()=>resolve("B"), 2000))
+let letter3 = new Promise(res => setTimeout(()=>resolve("A"), 1000))
+
+Promise.all([letter1, letter2, letter3])
+    .then(letters => console.log(letters))
+
+
+// 🧪 Exercise 3 — Proper error handling
+function fetchData(success){
+    return new Promise((resolve, reject)=>{
+       if(success){
+        resolve("Data received !")
+    }else{
+        reject("Network error !")
+    } 
+    });
+    
+}
+
+fetchData(true)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+fetchData(false)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+
+// 🧪 Exercise 4 — Returning promises correctly (trap exercise)
+
+function step1(){
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("Step 1");
+            resolve();
+        }, 1000);
+    });
+}
+
+function step2(){
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("Step 2");
+            resolve();
+        }, 1000);
+    });
+}
+
+step1()
+    .then(()=> step2())
+    .then(()=> console.log("Done"))
+
+// for number 4, I got lost on whether to use both .then and .catch
+
+
+// 🧪 Exercise 5 — Mixed sequential + parallel (real world pattern)
+
+function login() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("User logged in");
+            resolve();
+        }, 2000);
+    });
+}
+
+function fetchProfile() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("Profile fetched");
+            resolve();
+        }, 2000);
+    });
+}
+
+function fetchNotifications() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("Notifications fetched");
+            resolve();
+        }, 2000);
+    });
+}
+
+login()
+    .then(() => {
+        return Promise.all([fetchProfile(), fetchNotifications()]);
+    })
+    .then(() => console.log("Dashboard ready"));
+
+
+
