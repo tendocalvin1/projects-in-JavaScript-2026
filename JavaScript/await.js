@@ -53,3 +53,34 @@ async function run(){
 }
 
 run()
+
+
+async function fetchInfo(){
+    let res = await fetch ("https://jsonplaceholder.typicode.com/users/1");
+    let data = await res.json();
+    console.log(data.name)
+}
+
+fetchInfo();
+
+// Example  – Error handling
+async function test(){
+    try{
+        throw new Error("Oops");
+    }catch(e){
+        console.log(e.message)
+    }
+}
+
+test()
+
+// Example – Sequential steps
+async function steps(){
+    await delay();
+    console.log("step 1");
+    await delay();
+    console.log("step 2");
+
+}
+
+steps()
